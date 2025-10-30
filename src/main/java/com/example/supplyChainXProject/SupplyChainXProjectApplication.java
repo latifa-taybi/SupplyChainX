@@ -9,5 +9,4 @@ public class SupplyChainXProjectApplication {
 	public static void main(String[] args) {
 		SpringApplication.run(SupplyChainXProjectApplication.class, args);
 	}
-
 }
