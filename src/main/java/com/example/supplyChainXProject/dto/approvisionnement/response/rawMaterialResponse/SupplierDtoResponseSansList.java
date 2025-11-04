@@ -1,4 +1,4 @@
-package com.example.supplyChainXProject.dto.approvisionnement;
+package com.example.supplyChainXProject.dto.approvisionnement.response.rawMaterialResponse;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
@@ -8,25 +8,15 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class SupplierDto {
-
-    @NotBlank(message = "le prenom du fournisseur est obligatoire")
+public class SupplierDtoResponseSansList {
     private String firstName;
-
-    @NotEmpty(message = "le nom du fournisseur est obligatoire")
     private String lastName;
-
     private String contact;
-
-    @NotNull(message = "la note du fournisseur est obligatoire")
     private Double rating;
-
-    @NotNull(message = "le delai moyen est obligatoire")
     private Integer leadTime;
 
 
