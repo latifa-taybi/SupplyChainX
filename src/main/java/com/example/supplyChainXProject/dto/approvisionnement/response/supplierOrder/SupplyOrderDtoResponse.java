@@ -2,13 +2,13 @@ package com.example.supplyChainXProject.dto.approvisionnement.response.supplierO
 import com.example.supplyChainXProject.dto.approvisionnement.response.rawMaterialResponse.SupplierDtoResponseSansList;
 import com.example.supplyChainXProject.enums.SupplyOrderStatus;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 import java.util.List;
 
 public record SupplyOrderDtoResponse (
         Long idOrder,
         SupplierDtoResponseSansList supplier,
-        LocalDate orderDate,
+        LocalDateTime  orderDate,
         SupplyOrderStatus status,
         List<RawMaterialSupplyOrderDtoResponse> rawMaterialSupplyOrders
 ){}

@@ -2,7 +2,7 @@ package com.example.supplyChainXProject.dto.approvisionnement;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 import java.util.Map;
 
 public record SupplyOrderDto (
@@ -13,5 +13,5 @@ public record SupplyOrderDto (
     Map<Long, Integer> rawMaterialsAndQuantity,
 
     @NotNull(message = "Order date cannot be null")
-    LocalDate orderDate
+    LocalDateTime  orderDate
 ){}

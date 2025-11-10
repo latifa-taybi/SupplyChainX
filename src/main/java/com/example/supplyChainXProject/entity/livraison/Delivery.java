@@ -3,7 +3,7 @@ package com.example.supplyChainXProject.entity.livraison;
 import com.example.supplyChainXProject.enums.DeliveryStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 
 @Entity
 @Table(name = "deliveries")
@@ -13,7 +13,7 @@ public class Delivery {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idDelivery;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "order_id_order")
     private Order order;
 
@@ -23,6 +23,6 @@ public class Delivery {
     @Enumerated(EnumType.STRING)
     private DeliveryStatus status;
 
-    private LocalDate deliveryDate;
+    private LocalDateTime  deliveryDate;
     private Double cost;
 }

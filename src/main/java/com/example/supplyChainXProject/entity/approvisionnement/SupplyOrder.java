@@ -3,7 +3,7 @@ package com.example.supplyChainXProject.entity.approvisionnement;
 import com.example.supplyChainXProject.enums.SupplyOrderStatus;
 import jakarta.persistence.*;
 import lombok.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 import java.util.ArrayList;
 import java.util.List;
 @Getter
@@ -20,7 +20,7 @@ public class SupplyOrder {
     @JoinColumn(name = "supplier_id")
     private Supplier supplier;
 
-    private LocalDate orderDate;
+    private LocalDateTime  orderDate;
 
     @Enumerated(EnumType.STRING)
     private SupplyOrderStatus status;

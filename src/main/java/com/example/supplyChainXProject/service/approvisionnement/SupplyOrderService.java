@@ -3,7 +3,6 @@ package com.example.supplyChainXProject.service.approvisionnement;
 import com.example.supplyChainXProject.apiResponse.MessageResponse;
 import com.example.supplyChainXProject.dto.approvisionnement.SupplyOrderDto;
 import com.example.supplyChainXProject.dto.approvisionnement.response.supplierOrder.SupplyOrderDtoResponse;
-import com.example.supplyChainXProject.dto.approvisionnement.response.supplierResponse.SupplierDtoResponse;
 import com.example.supplyChainXProject.entity.approvisionnement.RawMaterial;
 import com.example.supplyChainXProject.entity.approvisionnement.RawMaterialSupplyOrder;
 import com.example.supplyChainXProject.entity.approvisionnement.Supplier;
@@ -17,7 +16,6 @@ import com.example.supplyChainXProject.repository.approvisionnement.ISupplyOrder
 import com.example.supplyChainXProject.service.approvisionnement.interfaces.ISupplyOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,6 @@ public class SupplyOrderService implements ISupplyOrderService {
     private final ISupplyOrderRepository supplyOrderRepository;
     private final ISupplyOrderMapper supplyOrderMapper;
     private final ISupplierRepository supplierRepository;
-    private final IRawMaterialSupplyOrderRepository rawMaterialSupplyOrderRepository;
     private final IRawMaterialRepository rawMaterialRepository;
 
     @Override

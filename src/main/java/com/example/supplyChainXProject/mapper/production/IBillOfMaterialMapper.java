@@ -6,6 +6,7 @@ import com.example.supplyChainXProject.entity.production.BillOfMaterial;
 import com.example.supplyChainXProject.mapper.approvisionnement.IRawMatrialMapper;
 import org.mapstruct.Mapper;
 
+
 @Mapper(componentModel = "spring", uses = IRawMatrialMapper.class)
 public interface IBillOfMaterialMapper {
     BillOfMaterialResponseDto toDtoResponse(BillOfMaterial billOfMaterial);

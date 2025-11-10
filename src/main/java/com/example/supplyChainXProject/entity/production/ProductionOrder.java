@@ -8,7 +8,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime ;
 
 @Getter
 @Setter
@@ -19,12 +19,12 @@ public class ProductionOrder {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer Quantity;
+    private Integer quantity;
     @Enumerated(EnumType.STRING)
     private ProductionOrderStatus productionOrderStatus;
     @ManyToOne
     @JoinColumn(name = "product_id")
     private Product product;
-    private LocalDate startDate;
-    private LocalDate endDate;
+    private LocalDateTime  startDate;
+    private LocalDateTime  endDate;
 }

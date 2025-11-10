@@ -19,6 +19,6 @@ public class Customer {
     private String address;
     @OneToMany(mappedBy = "customer", fetch = FetchType.EAGER)
     private List<Order> orders;
-    private String City;
+    private String city;
 }
 
