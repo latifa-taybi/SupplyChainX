@@ -16,4 +16,5 @@ public interface IProductionOrderService {
     MessageResponse bloqueOrder(Long id);
     List<ProductionOrderDtoResponse> getProductionOrdersByStatus(ProductionOrderStatus status);
     long tempsEstime(Long id);
+    void terminerProduction(Long id);
 }

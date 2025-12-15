@@ -7,7 +7,7 @@ import lombok.*;
 @Entity
 @Table(name = "users")
 @Getter @Setter @NoArgsConstructor @AllArgsConstructor
-public class User {
+public class UserApp {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idUser;

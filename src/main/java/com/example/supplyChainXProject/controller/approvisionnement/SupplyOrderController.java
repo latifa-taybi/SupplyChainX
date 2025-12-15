@@ -12,6 +12,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -25,6 +26,7 @@ public class SupplyOrderController {
     private final ISupplyOrderService supplyOrderService;
 
     @PostMapping
+    @PreAuthorize("hasAnyRole('RESPONSABLE_ACHATS')")
     public ResponseEntity<?> createSupplyOrder(@Valid @RequestBody SupplyOrderDto supplyOrderDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -33,17 +35,20 @@ public class SupplyOrderController {
     }
 
     @GetMapping
+    @PreAuthorize("hasAnyRole('SUPERVISEUR_LOGISTIQUE')")
     public ResponseEntity<List<SupplyOrderDtoResponse>> getAllSuppliers(){
         List<SupplyOrderDtoResponse> supplyOrdesrs = supplyOrderService.getAllSupplyOrders();
         return ResponseEntity.ok(supplyOrdesrs);
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasAnyRole('RESPONSABLE_ACHATS')")
     public ResponseEntity<?> getSupplierById(@PathVariable("id") Long id){
         return ResponseEntity.ok(supplyOrderService.getSupplyOrderById(id));
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasAnyRole('RESPONSABLE_ACHATS')")
     public ResponseEntity<?> updateSupplyOrder(@PathVariable("id") Long id, @Valid @RequestBody SupplyOrderDto supplyOrderDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -53,12 +58,14 @@ public class SupplyOrderController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasAnyRole('RESPONSABLE_ACHATS')")
     public ResponseEntity<MessageResponse> deleteSupplyOrder(@PathVariable("id") Long id){
         MessageResponse messageResponse = supplyOrderService.deleteSupplyOrder(id);
         return ResponseEntity.ok(messageResponse);
     }
 
     @GetMapping("/status/{status}")
+    @PreAuthorize("hasAnyRole('SUPERVISEUR_LOGISTIQUE')")
     public ResponseEntity<List<SupplyOrderDtoResponse>> getSupplyOrdersByStatus(@PathVariable("status") SupplyOrderStatus status) {
         List<SupplyOrderDtoResponse> orders = supplyOrderService.getSupplyOrdersByStatus(status);
         return ResponseEntity.ok(orders);

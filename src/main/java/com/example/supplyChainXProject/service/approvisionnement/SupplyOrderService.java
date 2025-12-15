@@ -10,18 +10,19 @@ import com.example.supplyChainXProject.entity.approvisionnement.SupplyOrder;
 import com.example.supplyChainXProject.enums.SupplyOrderStatus;
 import com.example.supplyChainXProject.mapper.approvisionnement.ISupplyOrderMapper;
 import com.example.supplyChainXProject.repository.approvisionnement.IRawMaterialRepository;
-import com.example.supplyChainXProject.repository.approvisionnement.IRawMaterialSupplyOrderRepository;
 import com.example.supplyChainXProject.repository.approvisionnement.ISupplierRepository;
 import com.example.supplyChainXProject.repository.approvisionnement.ISupplyOrderRepository;
 import com.example.supplyChainXProject.service.approvisionnement.interfaces.ISupplyOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Map;
 
 @Service
 @AllArgsConstructor
+@Transactional
 public class SupplyOrderService implements ISupplyOrderService {
     private final ISupplyOrderRepository supplyOrderRepository;
     private final ISupplyOrderMapper supplyOrderMapper;
@@ -44,6 +45,7 @@ public class SupplyOrderService implements ISupplyOrderService {
             RawMaterialSupplyOrder rawMaterialSupplyOrder = new RawMaterialSupplyOrder();
             rawMaterialSupplyOrder.setRawMaterial(material);
             rawMaterialSupplyOrder.setQuantity(quantity);
+            material.setStock(material.getStock()+quantity);
             order.addRawMaterialSupplyOrder(rawMaterialSupplyOrder);
         }
         SupplyOrder supplyOrder =  supplyOrderRepository.save(order);
@@ -86,9 +88,8 @@ public class SupplyOrderService implements ISupplyOrderService {
 
     @Override
     public SupplyOrderDtoResponse getSupplyOrderById(Long id) {
-            SupplyOrder supplyOrder = supplyOrderRepository.findById(id).orElseThrow(()->new RuntimeException("order Not Found"));
-            SupplyOrderDtoResponse supplyOrderDtoResponse = supplyOrderMapper.toDtoResponse(supplyOrder);
-            return supplyOrderDtoResponse;
+        SupplyOrder supplyOrder = supplyOrderRepository.findById(id).orElseThrow(()->new RuntimeException("order Not Found"));
+        return supplyOrderMapper.toDtoResponse(supplyOrder);
     }
 
     @Override

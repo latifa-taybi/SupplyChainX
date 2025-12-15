@@ -23,7 +23,7 @@ public class Supplier {
     private Integer leadTime;
 
     @OneToMany(mappedBy = "supplier", cascade = CascadeType.ALL)
-    private List<SupplyOrder> orders;
+    private List<SupplyOrder> orders = new ArrayList<>();
 
     @ManyToMany
     @JoinTable(name = "supplier_raw_material", joinColumns = @JoinColumn(name = "supplier_id"), inverseJoinColumns = @JoinColumn(name = "raw_material_id"))

@@ -1,22 +1,18 @@
 package com.example.supplyChainXProject.service.livraison;
 
 import com.example.supplyChainXProject.apiResponse.MessageResponse;
-import com.example.supplyChainXProject.dto.approvisionnement.response.supplierOrder.SupplyOrderDtoResponse;
 import com.example.supplyChainXProject.dto.livraison.OrderDto;
 import com.example.supplyChainXProject.dto.livraison.response.order.OrderResponseDto;
-import com.example.supplyChainXProject.entity.approvisionnement.SupplyOrder;
 import com.example.supplyChainXProject.entity.livraison.Customer;
 import com.example.supplyChainXProject.entity.livraison.Delivery;
 import com.example.supplyChainXProject.entity.livraison.Order;
 import com.example.supplyChainXProject.entity.production.Product;
 import com.example.supplyChainXProject.enums.DeliveryStatus;
 import com.example.supplyChainXProject.enums.OrderStatus;
-import com.example.supplyChainXProject.enums.SupplyOrderStatus;
 import com.example.supplyChainXProject.mapper.livraison.IOrderMapper;
 import com.example.supplyChainXProject.repository.livraison.ICustomerRepository;
 import com.example.supplyChainXProject.repository.livraison.IOrderRepository;
 import com.example.supplyChainXProject.repository.production.IProductRepository;
-import com.example.supplyChainXProject.repository.production.IProductionOrderRepository;
 import com.example.supplyChainXProject.service.livraison.interfaces.IOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;

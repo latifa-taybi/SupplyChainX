@@ -2,7 +2,6 @@ package com.example.supplyChainXProject.service.production;
 
 import com.example.supplyChainXProject.apiResponse.MessageResponse;
 import com.example.supplyChainXProject.dto.production.ProductionOrderDto;
-import com.example.supplyChainXProject.dto.production.response.BillOfMaterialResponseDto;
 import com.example.supplyChainXProject.dto.production.response.ProductionOrderDtoResponse;
 import com.example.supplyChainXProject.entity.approvisionnement.RawMaterial;
 import com.example.supplyChainXProject.entity.production.BillOfMaterial;
@@ -16,11 +15,12 @@ import com.example.supplyChainXProject.repository.production.IProductionOrderRep
 import com.example.supplyChainXProject.service.production.interfaces.IProductionOrderService;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 import java.util.List;
 @Service
+@Transactional
 @AllArgsConstructor
 public class ProductionOrderService implements IProductionOrderService {
     private final IProductRepository productRepository;
@@ -104,5 +104,15 @@ public class ProductionOrderService implements IProductionOrderService {
     public long tempsEstime(Long id){
         ProductionOrder productionOrder = productionOrderRepository.findById(id).orElseThrow(()->new RuntimeException("production order not found"));
         return ChronoUnit.MINUTES.between(productionOrder.getStartDate(), productionOrder.getEndDate());
+    }
+
+    @Override
+    public void terminerProduction(Long id) {
+        ProductionOrder productionOrder = productionOrderRepository.findById(id).orElseThrow(()->new RuntimeException("not found"));
+        if(productionOrder.getProductionOrderStatus().equals(ProductionOrderStatus.EN_ATTENTE)){
+            System.out.println("terminer");
+            productionOrder.getProduct().setStock(productionOrder.getProduct().getStock()+productionOrder.getQuantity());
+            productionOrder.setProductionOrderStatus(ProductionOrderStatus.TERMINE);
+        }
     }
 }

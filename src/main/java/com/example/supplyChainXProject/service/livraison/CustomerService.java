@@ -1,10 +1,8 @@
 package com.example.supplyChainXProject.service.livraison;
 
 import com.example.supplyChainXProject.apiResponse.MessageResponse;
-import com.example.supplyChainXProject.dto.approvisionnement.SupplierDto;
 import com.example.supplyChainXProject.dto.livraison.CustomerDto;
 import com.example.supplyChainXProject.dto.livraison.response.customer.CustomerResponseDto;
-import com.example.supplyChainXProject.entity.approvisionnement.Supplier;
 import com.example.supplyChainXProject.entity.livraison.Customer;
 import com.example.supplyChainXProject.entity.livraison.Order;
 import com.example.supplyChainXProject.enums.OrderStatus;

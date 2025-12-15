@@ -36,8 +36,7 @@ public class RawMaterialService implements IRawMaterialService {
             }
         }
         RawMaterial savingRawMaterial =  rawMaterialRepository.save(rawMaterial);
-        RawMaterialDtoResponse savingRawMaterialDto = rawMatrialMapper.toDtoResponse(savingRawMaterial);
-        return savingRawMaterialDto;
+        return rawMatrialMapper.toDtoResponse(savingRawMaterial);
     }
 
     @Override
@@ -65,8 +64,7 @@ public class RawMaterialService implements IRawMaterialService {
             }
         }
         RawMaterial savingRawMaterial =  rawMaterialRepository.save(rawMaterial);
-        RawMaterialDtoResponse savingRawMaterialDto = rawMatrialMapper.toDtoResponse(savingRawMaterial);
-        return savingRawMaterialDto;
+        return rawMatrialMapper.toDtoResponse(savingRawMaterial);
     }
 
     @Override

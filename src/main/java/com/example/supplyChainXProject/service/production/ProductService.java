@@ -5,18 +5,13 @@ import com.example.supplyChainXProject.dto.approvisionnement.response.supplierOr
 import com.example.supplyChainXProject.dto.production.ProductDto;
 import com.example.supplyChainXProject.dto.production.response.ProductResponseDto;
 import com.example.supplyChainXProject.entity.approvisionnement.RawMaterial;
-import com.example.supplyChainXProject.entity.approvisionnement.RawMaterialSupplyOrder;
-import com.example.supplyChainXProject.entity.approvisionnement.Supplier;
-import com.example.supplyChainXProject.entity.approvisionnement.SupplyOrder;
 import com.example.supplyChainXProject.entity.production.BillOfMaterial;
 import com.example.supplyChainXProject.entity.production.Product;
-import com.example.supplyChainXProject.enums.SupplyOrderStatus;
 import com.example.supplyChainXProject.mapper.production.IProductMapper;
 import com.example.supplyChainXProject.repository.approvisionnement.IRawMaterialRepository;
 import com.example.supplyChainXProject.repository.production.IProductRepository;
 import com.example.supplyChainXProject.service.production.interfaces.IProductService;
 import lombok.AllArgsConstructor;
-import lombok.Setter;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
