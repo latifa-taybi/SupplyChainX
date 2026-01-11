@@ -10,7 +10,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,7 +22,6 @@ import java.util.List;
 public class OrderController {
     private final IOrderService orderService;
     @PostMapping
-    @PreAuthorize("hasAnyRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> createOrder(@Valid @RequestBody OrderDto orderDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -32,7 +30,6 @@ public class OrderController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> updateOrder(@PathVariable("id") Long id, @Valid @RequestBody OrderDto orderDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -42,27 +39,23 @@ public class OrderController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPERVISEUR_LIVRAISONS')")
     public ResponseEntity<List<OrderResponseDto>> getAllOrders(){
         List<OrderResponseDto> orders = orderService.getAllOrderss();
         return ResponseEntity.ok(orders);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> getOrderById(@PathVariable("id") Long id){
         return ResponseEntity.ok(orderService.getOrderById(id));
     }
 
     @GetMapping("/status/{status}")
-    @PreAuthorize("hasAnyRole('SUPERVISEUR_LIVRAISONS')")
     public ResponseEntity<List<OrderResponseDto>> getOrdersByStatus(@PathVariable("status") OrderStatus status) {
         List<OrderResponseDto> orders = orderService.getOrderByStatus(status);
         return ResponseEntity.ok(orders);
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<MessageResponse> deleteOrder(@PathVariable("id") Long id){
         MessageResponse messageResponse = orderService.deleteOrder(id);
         return ResponseEntity.ok(messageResponse);

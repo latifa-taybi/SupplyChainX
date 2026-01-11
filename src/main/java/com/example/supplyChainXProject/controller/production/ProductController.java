@@ -26,7 +26,7 @@ import java.util.List;
 public class ProductController {
     private final IProductService productService;
     @PostMapping
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION')")
+    @PreAuthorize("hasRole('CHEF_PRODUCTION')")
     public ResponseEntity<?> createProduct(@Valid @RequestBody ProductDto productDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -35,20 +35,18 @@ public class ProductController {
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPERVISEUR_PRODUCTION')")
+    @PreAuthorize("hasRole('CHEF_PRODUCTION')")
     public ResponseEntity<List<ProductResponseDto>> getAllProducts(){
         List<ProductResponseDto> produducts = productService.getAllProducts();
         return ResponseEntity.ok(produducts);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION')")
     public ResponseEntity<?> getProductById(@PathVariable("id") Long id){
         return ResponseEntity.ok(productService.getProductById(id));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION')")
     public ResponseEntity<?> updateProduct(@PathVariable("id") Long id, @Valid @RequestBody ProductDto productDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -58,14 +56,12 @@ public class ProductController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION')")
     public ResponseEntity<MessageResponse> deleteProduct(@PathVariable("id") Long id){
         MessageResponse messageResponse = productService.deleteProduct(id);
         return ResponseEntity.ok(messageResponse);
     }
 
     @GetMapping("/search/{name}")
-    @PreAuthorize("hasAnyRole('SUPERVISEUR_PRODUCTION')")
     public ResponseEntity<?> searchProductByName(@PathVariable("name") String name) {
         ProductResponseDto product = productService.searchByName(name);
         return ResponseEntity.ok(product);

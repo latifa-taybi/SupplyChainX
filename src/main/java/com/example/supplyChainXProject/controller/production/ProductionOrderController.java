@@ -14,7 +14,6 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,7 +26,6 @@ import java.util.List;
 public class ProductionOrderController {
     private final IProductionOrderService productionOrderService;
     @PostMapping
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION','ADMIN')")
     public ResponseEntity<?> createProductionOrder(@Valid @RequestBody ProductionOrderDto productionOrderDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -36,7 +34,6 @@ public class ProductionOrderController {
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION','ADMIN')")
     public ResponseEntity<?> updateProductionOrder(@PathVariable("id") Long id, @Valid @RequestBody ProductionOrderDto productionOrderDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -46,33 +43,28 @@ public class ProductionOrderController {
     }
 
     @PostMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION','ADMIN')")
     public ResponseEntity<MessageResponse> blockProductionOrder(@PathVariable("id") Long id){
         return ResponseEntity.ok(productionOrderService.bloqueOrder(id));
     }
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('SUPERVISEUR_PRODUCTION','ADMIN')")
     public ResponseEntity<List<ProductionOrderDtoResponse>> getAllProductionOrders(){
         List<ProductionOrderDtoResponse> productionOrders = productionOrderService.getAllProductionOrders();
         return ResponseEntity.ok(productionOrders);
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('CHEF_PRODUCTION','ADMIN')")
     public ResponseEntity<?> getProductionOrderById(@PathVariable("id") Long id){
         return ResponseEntity.ok(productionOrderService.getProductionOrderById(id));
     }
 
     @GetMapping("/status/{status}")
-    @PreAuthorize("hasAnyRole('SUPERVISEUR_PRODUCTION','ADMIN')")
     public ResponseEntity<List<ProductionOrderDtoResponse>> getProductionOrdersByStatus(@PathVariable("status") ProductionOrderStatus status) {
         List<ProductionOrderDtoResponse> productionOrders = productionOrderService.getProductionOrdersByStatus(status);
         return ResponseEntity.ok(productionOrders);
     }
 
     @GetMapping("/periode/{id}")
-    @PreAuthorize("hasAnyRole('PLANIFICATEUR','ADMIN')")
     public ResponseEntity<?> getPeriodEstimate(@PathVariable("id") Long id){
         return ResponseEntity.ok("le temps estime est : " + productionOrderService.tempsEstime(id));
     }
