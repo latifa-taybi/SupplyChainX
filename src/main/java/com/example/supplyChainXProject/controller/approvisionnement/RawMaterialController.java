@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,7 @@ public class RawMaterialController {
     private final IRawMaterialService rawMaterialService;
 
     @PostMapping(consumes = "application/json", produces = "application/json" , path = "/create")
+    @PreAuthorize("hasRole('GESTIONNAIRE_APPROVISIONNEMENT')")
     public ResponseEntity<?> createRawMaterial(@Valid @RequestBody RawMaterialDto rawMaterialDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -29,18 +31,21 @@ public class RawMaterialController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_APPROVISIONNEMENT')")
     public ResponseEntity<?> getRawMaterialById(@PathVariable("id") Long id){
         RawMaterialDtoResponse rawMaterial = rawMaterialService.getRawMaterialById(id);
         return ResponseEntity.ok(rawMaterial);
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('SUPERVISEUR_LOGISTIQUE')")
     public ResponseEntity<List<RawMaterialDtoResponse>> getAllRawMaterials(){
         List<RawMaterialDtoResponse> rawMaterials = rawMaterialService.getAllRawMaterials();
         return ResponseEntity.ok(rawMaterials);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_APPROVISIONNEMENT')")
     public ResponseEntity<?> updateSupplier(@PathVariable("id") Long id, @Valid @RequestBody RawMaterialDto rawMaterialDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -49,12 +54,14 @@ public class RawMaterialController {
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_APPROVISIONNEMENT')")
     public ResponseEntity<MessageResponse> deleteRawMaterial(@PathVariable("id") Long id){
         MessageResponse messageResponse = rawMaterialService.deleteRawMaterial(id);
         return ResponseEntity.ok(messageResponse);
     }
 
     @GetMapping("/stock/{stockCritique}")
+    @PreAuthorize("hasRole('SUPERVISEUR_LOGISTIQUE')")
     public ResponseEntity<?> getMaterialsBelowStock(@PathVariable("stockCritique") Integer stockCritique) {
         List<RawMaterialDtoResponse> materials = rawMaterialService.filterByCritiqueStock(stockCritique);
         return ResponseEntity.ok(materials);

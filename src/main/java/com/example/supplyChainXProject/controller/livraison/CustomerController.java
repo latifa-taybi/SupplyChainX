@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
@@ -22,6 +23,7 @@ public class CustomerController {
     private final ICustomerService customerService;
 
     @PostMapping
+    @PreAuthorize("hasRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> createCustomer(@Valid @RequestBody CustomerDto customerDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -30,12 +32,14 @@ public class CustomerController {
     }
 
     @GetMapping
+    @PreAuthorize("hasRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<List<CustomerResponseDto>> getAllCustomers(){
         List<CustomerResponseDto> customers = customerService.getAllCustomers();
         return ResponseEntity.ok(customers);
     }
 
     @PutMapping("/{id}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> updateCustomer(@PathVariable("id") Long id, @Valid @RequestBody CustomerDto customerDto, BindingResult result){
         if (result.hasErrors()) {
             return ResponseEntity.badRequest().body(Validation.getValidationErrors(result));
@@ -45,17 +49,20 @@ public class CustomerController {
     }
 
     @GetMapping("/{id}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> getCustomerById(@PathVariable("id") Long id){
         return ResponseEntity.ok(customerService.getCustomerById(id));
     }
 
     @DeleteMapping("/{id}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<MessageResponse> deleteCustomer(@PathVariable("id") Long id){
         MessageResponse messageResponse = customerService.deleteCustomer(id);
         return ResponseEntity.ok(messageResponse);
     }
 
     @GetMapping("/search/{name}")
+    @PreAuthorize("hasRole('GESTIONNAIRE_COMMERCIAL')")
     public ResponseEntity<?> searchCustomerByName(@PathVariable("name") String name) {
         CustomerResponseDto customer = customerService.searchByName(name);
         return ResponseEntity.ok(customer);
